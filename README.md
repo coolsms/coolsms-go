@@ -13,6 +13,7 @@ func main() {
 	client := coolsms.NewClient()
 
 	// Message Data
+	// 관련 파라미터들은 https://docs.coolsms.co.kr에서 확인 가능합니다.
 	message := make(map[string]interface{})
 	message["to"] = "01000000000"
 	message["from"] = "029302266"
@@ -30,7 +31,7 @@ func main() {
 }
 ```
 
-[examples folder](https://github.com/coolsms/coolsms-go/tree/master/_examples) 에서 자세한 예제파일들을 확인하세요.
+[examples folder](https://github.com/coolsms/coolsms-go/tree/master/_examples)에서 자세한 예제파일들을 확인하세요.
 
 ## Installation
 
