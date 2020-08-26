@@ -19,6 +19,8 @@ import (
 	"github.com/coolsms/coolsms-go/types"
 )
 
+const sdkVersion string = "GO-SDK v1.0"
+
 var errFailedToConvertJSON = errors.New("FailedToConvertJSON")
 var errFailedToClientRequest = errors.New("FailedToClientRequest")
 var errFailedToReadFile = errors.New("FailedToReadFile")
@@ -35,7 +37,9 @@ type APIRequest struct {
 	Protocol   string `json:"Protocol"`
 	Domain     string `json:"Domain"`
 	Prefix     string `json:"Prefix"`
-	SdkVersion string `json:"SdkVersion"`
+	AppId      string `json: "AppId"`
+	SdkVersion string
+	OsPlatform string
 }
 
 // RandomString returns a random string
@@ -51,7 +55,11 @@ func RandomString(n int) string {
 
 // NewAPIRequest create
 func NewAPIRequest() *APIRequest {
-	request := APIRequest{response: "", statusCode: ""}
+	os := runtime.GOOS
+	goVersion := runtime.Version()
+	osPlatform := fmt.Sprintf("%s/%s", os, goVersion)
+
+	request := APIRequest{response: "", statusCode: "", OsPlatform: osPlatform, SdkVersion: sdkVersion}
 
 	_, b, _, _ := runtime.Caller(0)
 	filePath := filepath.Dir(b)

@@ -12,7 +12,8 @@
 *.out
 
 # Debug files
-_debug_bin
+.vscode
+__debug_bin
 
 # Vim backup files
 *.swp

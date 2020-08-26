@@ -25,6 +25,16 @@ func (r *Messages) GetMessageList(params map[string]string) (types.MessageList, 
 // SendSimpleMessage sends a simple message
 func (r *Messages) SendSimpleMessage(params map[string]interface{}) (types.SimpleMessage, error) {
 	request := apirequest.NewAPIRequest()
+	if _, ok := params["agent"]; ok {
+		delete(params, "agent")
+	}
+
+	agent := map[string]string{"sdkVersion": request.SdkVersion, "osPlatform": request.OsPlatform}
+	if request.AppId != "" {
+		agent["appId"] = request.AppId
+	}
+	params["agent"] = agent
+
 	result := types.SimpleMessage{}
 	err := request.POST("messages/v4/send", params, &result)
 	if err != nil {
@@ -37,6 +47,11 @@ func (r *Messages) SendSimpleMessage(params map[string]interface{}) (types.Simpl
 // CreateGroup creeate message group
 func (r *Messages) CreateGroup(params map[string]string) (types.Group, error) {
 	request := apirequest.NewAPIRequest()
+	params["sdkVersion"] = request.SdkVersion
+	params["osPlatform"] = request.OsPlatform
+	if request.AppId != "" {
+		params["appId"] = request.AppId
+	}
 	result := types.Group{}
 	err := request.POST("messages/v4/groups", params, &result)
 	if err != nil {

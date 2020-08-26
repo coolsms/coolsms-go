@@ -4,5 +4,5 @@
   "Protocol": "https",
   "Domain": "api.coolsms.co.kr",
   "Prefix": "",
-  "SdkVersion": "1.0"
+  "AppId": ""
 }
