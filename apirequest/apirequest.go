@@ -88,7 +88,7 @@ func (a *APIRequest) GetAuthorization() string {
 func (a *APIRequest) GET(resource string, params map[string]string, customStruct interface{}) error {
 	// Prepare for Http Request
 	client := &http.Client{}
-	url := fmt.Sprintf("%s://%s/%s", a.Protocol, a.Domain, resource)
+	url := fmt.Sprintf("%s://%s/%s%s", a.Protocol, a.Domain, a.Prefix, resource)
 	fmt.Println("URL :", url)
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -136,7 +136,7 @@ func (a *APIRequest) Request(method string, resource string, params interface{},
 
 	// Prepare for Http Request
 	client := &http.Client{}
-	url := fmt.Sprintf("%s://%s/%s", a.Protocol, a.Domain, resource)
+	url := fmt.Sprintf("%s://%s/%s%s", a.Protocol, a.Domain, a.Prefix, resource)
 	fmt.Println("URL :", url)
 	req, _ := http.NewRequest(method, url, bytes.NewBuffer(jsonString))
 
