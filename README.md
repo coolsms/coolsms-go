@@ -36,7 +36,7 @@ func main() {
 ## Installation
 
 ```
-go 1.15
+go 1.14
 
 require (
         github.com/coolsms/coolsms-go
