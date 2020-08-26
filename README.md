@@ -1,4 +1,4 @@
-# Go Message SDK
+# coolsms-go
 
 [Site](https://www.coolsms.co.kr/) |
 [Docs](https://docs.coolsms.co.kr/) |
