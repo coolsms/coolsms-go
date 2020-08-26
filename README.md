@@ -18,9 +18,9 @@ func main() {
 	message["to"] = "01000000000"
 	message["from"] = "029302266"
 	message["text"] = "Test Message"
-  message["type"] = "SMS"
+	message["type"] = "SMS"
 
-  params := make(map[string]interface{})
+	params := make(map[string]interface{})
 	params["message"] = message
 
 	// Call API Resource
