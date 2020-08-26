@@ -1,2 +1,43 @@
-# coolsms-go
-Coolsms Go library
+# Go Message SDK
+
+[Site](https://www.coolsms.co.kr/) |
+[Docs](https://docs.coolsms.co.kr/) |
+[Examples](https://github.com/coolsms/coolsms-go/tree/master/_examples) |
+
+문자 메시지 발송 및 조회 관련 기능들을 쉽게 사용하실 수 있도록 만들어진 SDK 입니다.
+
+## Example
+
+```go
+func main() {
+	client := coolsms.NewClient()
+
+	// Message Data
+	message := make(map[string]interface{})
+	message["to"] = "01000000000"
+	message["from"] = "029302266"
+	message["text"] = "Test Message"
+  message["type"] = "SMS"
+
+  params := make(map[string]interface{})
+	params["message"] = message
+
+	// Call API Resource
+	result, err := client.Message.SendSimpleMessage(params)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
+```
+
+[examples folder](https://github.com/coolsms/coolsms-go/tree/master/_examples) 에서 자세한 예제파일들을 확인하세요.
+
+## Installation
+
+```
+go 1.15
+
+require (
+        github.com/coolsms/coolsms-go
+)
+```
