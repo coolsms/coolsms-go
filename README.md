@@ -45,7 +45,8 @@ require (
 
 ## Configs
 
-```{
+```
+{
   "APIKey": "NCSPX2S1CWNQ3D1R",
   "APISecret": "IXHBDCUIKZKUEDPL3KQFQNOIJ15ZHKVL",
   "Protocol": "https",
