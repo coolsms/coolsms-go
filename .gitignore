@@ -18,3 +18,6 @@ __debug_bin
 # Vim backup files
 *.swp
 *.swo
+
+# etc
+.DS_Store
