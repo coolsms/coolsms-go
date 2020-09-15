@@ -16,6 +16,7 @@ func main() {
 	result, err := client.Messages.DeleteGroup(groupId)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	// Print Result

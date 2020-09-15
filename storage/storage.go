@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"encoding/base64"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"os"
 
@@ -12,8 +11,10 @@ import (
 	"github.com/coolsms/coolsms-go/types"
 )
 
-var errFailToReadFile = errors.New("FailToReadFile")
-var errFileNotFound = errors.New("FileNotFound")
+var (
+	errFailToReadFile = errors.New("FailToReadFile")
+	errFileNotFound   = errors.New("FileNotFound")
+)
 
 // Storage struct
 type Storage struct{}
@@ -28,17 +29,15 @@ func (r *Storage) UploadFile(params map[string]string) (types.File, error) {
 	}
 
 	// Open file
-	f, err1 := os.Open(params["file"])
-	if err1 != nil {
-		fmt.Println(err1)
+	f, err := os.Open(params["file"])
+	if err != nil {
 		return result, errFileNotFound
 	}
 
 	// Read entire contents into byte slice.
 	reader := bufio.NewReader(f)
-	content, err2 := ioutil.ReadAll(reader)
-	if err2 != nil {
-		fmt.Println(err2)
+	content, err := ioutil.ReadAll(reader)
+	if err != nil {
 		return result, errFailToReadFile
 	}
 
@@ -49,7 +48,7 @@ func (r *Storage) UploadFile(params map[string]string) (types.File, error) {
 	params["file"] = encoded
 
 	request := apirequest.NewAPIRequest()
-	err := request.POST("storage/v1/files", params, &result)
+	err = request.POST("storage/v1/files", params, &result)
 	if err != nil {
 		return result, err
 	}

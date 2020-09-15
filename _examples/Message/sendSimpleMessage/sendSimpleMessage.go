@@ -48,6 +48,7 @@ func main() {
 	result, err := client.Messages.SendSimpleMessage(params)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	// Print Result

@@ -9,6 +9,10 @@
 ## Example
 
 ```go
+require (
+        github.com/coolsms/coolsms-go
+)
+
 func main() {
 	client := coolsms.NewClient()
 
@@ -36,11 +40,7 @@ func main() {
 ## Installation
 
 ```
-go 1.14
-
-require (
-        github.com/coolsms/coolsms-go
-)
+go get github.com/solapi/solapi-go
 ```
 
 ## Configs

@@ -22,6 +22,7 @@ func main() {
 	result, err := client.Messages.GetMessageList(params)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	// Print Result

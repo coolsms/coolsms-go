@@ -19,13 +19,14 @@ func main() {
 	*/
 	params := make(map[string]string)
 	params["file"] = "./test.jpg"
-	params["name"] = "cutomFileName"
+	params["name"] = "customFileName"
 	params["type"] = "MMS"
 
 	// API 호출 후 결과값을 받아 옵니다.
 	result, err := client.Storage.UploadFile(params)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	// Print Result

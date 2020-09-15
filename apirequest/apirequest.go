@@ -3,6 +3,7 @@ package apirequest
 import (
 	"bytes"
 	"crypto/hmac"
+	cr "crypto/rand"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
@@ -10,7 +11,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"math/rand"
 	"net/http"
 	"path/filepath"
 	"runtime"
@@ -21,15 +21,16 @@ import (
 
 const sdkVersion string = "GO-SDK v1.0"
 
-var errFailedToConvertJSON = errors.New("FailedToConvertJSON")
-var errFailedToClientRequest = errors.New("FailedToClientRequest")
-var errFailedToReadFile = errors.New("FailedToReadFile")
+var (
+	errFailedToConvertJSON   = errors.New("FailedToConvertJSON")
+	errFailedToClientRequest = errors.New("FailedToClientRequest")
+)
 
 // APIRequest api
 type APIRequest struct {
 	// HTTP Request response, statusCode
-	response   string
-	statusCode string
+	response   string `json:"response"`
+	statusCode string `json:"statusCode"`
 
 	// Config
 	APIKey     string `json:"apiKey"`
@@ -37,20 +38,17 @@ type APIRequest struct {
 	Protocol   string `json:"Protocol"`
 	Domain     string `json:"Domain"`
 	Prefix     string `json:"Prefix"`
-	AppId      string `json: "AppId"`
-	SdkVersion string
-	OsPlatform string
+	AppId      string `json:"AppId"`
+	SdkVersion string `json:"sdkVersion"`
+	OsPlatform string `json:"osPlatform"`
 }
 
 // RandomString returns a random string
 func RandomString(n int) string {
-	var letters = []rune("abcdefghijklmnopqrstuvwxyz0123456789")
+	b := make([]byte, n)
+	_, _ = cr.Read(b)
 
-	s := make([]rune, n)
-	for i := range s {
-		s[i] = letters[rand.Intn(len(letters))]
-	}
-	return string(s)
+	return hex.EncodeToString(b)
 }
 
 // NewAPIRequest create
@@ -69,7 +67,11 @@ func NewAPIRequest() *APIRequest {
 		return &request
 	}
 
-	json.Unmarshal([]byte(file), &request)
+	err = json.Unmarshal(file, &request)
+	if err != nil {
+		log.Fatalln("Error file Unmarshal")
+		return &request
+	}
 	return &request
 }
 
@@ -89,7 +91,6 @@ func (a *APIRequest) GET(resource string, params map[string]string, customStruct
 	// Prepare for Http Request
 	client := &http.Client{}
 	url := fmt.Sprintf("%s://%s/%s%s", a.Protocol, a.Domain, a.Prefix, resource)
-	fmt.Println("URL :", url)
 	req, _ := http.NewRequest("GET", url, nil)
 
 	// Set Query Parameters
@@ -107,20 +108,24 @@ func (a *APIRequest) GET(resource string, params map[string]string, customStruct
 	// Request
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println(err)
 		return errFailedToClientRequest
 	}
 
 	// StatusCode가 200이 아니라면 에러로 처리
 	if resp.StatusCode != 200 {
 		errorStruct := types.CustomError{}
-		json.NewDecoder(resp.Body).Decode(&errorStruct)
-		fmt.Println("StatusCodeError:", resp.StatusCode)
+		err = json.NewDecoder(resp.Body).Decode(&errorStruct)
+		if err != nil {
+			return err
+		}
 		errString := fmt.Sprintf("%s[%d]:%s", errorStruct.ErrorCode, resp.StatusCode, errorStruct.ErrorMessage)
 		return errors.New(errString)
 	}
 
-	json.NewDecoder(resp.Body).Decode(&customStruct)
+	err = json.NewDecoder(resp.Body).Decode(&customStruct)
+	if err != nil {
+		return err
+	}
 	defer resp.Body.Close()
 	return nil
 }
@@ -128,16 +133,14 @@ func (a *APIRequest) GET(resource string, params map[string]string, customStruct
 // Request method request
 func (a *APIRequest) Request(method string, resource string, params interface{}, customStruct interface{}) error {
 	// Convert to json string
-	jsonString, jsonErr := json.Marshal(params)
-	if jsonErr != nil {
-		fmt.Println(jsonErr)
+	jsonString, err := json.Marshal(params)
+	if err != nil {
 		return errFailedToConvertJSON
 	}
 
 	// Prepare for Http Request
 	client := &http.Client{}
 	url := fmt.Sprintf("%s://%s/%s%s", a.Protocol, a.Domain, a.Prefix, resource)
-	fmt.Println("URL :", url)
 	req, _ := http.NewRequest(method, url, bytes.NewBuffer(jsonString))
 
 	// Set Headers
@@ -148,20 +151,24 @@ func (a *APIRequest) Request(method string, resource string, params interface{},
 	// Request
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println(err)
 		return errFailedToClientRequest
 	}
 
 	// StatusCode가 200이 아니라면 에러로 처리
 	if resp.StatusCode != 200 {
 		errorStruct := types.CustomError{}
-		json.NewDecoder(resp.Body).Decode(&errorStruct)
-		fmt.Println("StatusCodeError:", resp.StatusCode)
+		err = json.NewDecoder(resp.Body).Decode(&errorStruct)
+		if err != nil {
+			return err
+		}
 		errString := fmt.Sprintf("%s[%d]:%s", errorStruct.ErrorCode, resp.StatusCode, errorStruct.ErrorMessage)
 		return errors.New(errString)
 	}
 
-	json.NewDecoder(resp.Body).Decode(&customStruct)
+	err = json.NewDecoder(resp.Body).Decode(&customStruct)
+	if err != nil {
+		return err
+	}
 	defer resp.Body.Close()
 
 	return nil
