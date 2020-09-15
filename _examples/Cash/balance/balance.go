@@ -13,6 +13,7 @@ func main() {
 	result, err := client.Cash.Balance()
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	// Print Result

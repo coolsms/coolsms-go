@@ -18,6 +18,7 @@ func main() {
 	result, err := client.Storage.GetFileList(params)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	// Print Result

@@ -21,3 +21,6 @@ __debug_bin
 
 # etc
 .DS_Store
+
+# Jetbrains
+.idea/

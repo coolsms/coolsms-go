@@ -17,6 +17,7 @@ func main() {
 	result, err := client.Messages.GetGroupList(params)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	// Print Result

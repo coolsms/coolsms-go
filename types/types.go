@@ -75,7 +75,7 @@ type App struct {
 	Version string
 }
 
-// Price strcut
+// Price struct
 type Price struct {
 	SMS int
 	LMS int
@@ -124,7 +124,7 @@ type GroupMessageList struct {
 	MessageList MessageList
 }
 
-// KakaoOptions strcut
+// KakaoOptions struct
 type KakaoOptions struct {
 	SenderKey    string
 	TemplateCode string
@@ -192,7 +192,7 @@ type AddGroupMessageList struct {
 	ResultList []AddGroupMessage
 }
 
-// LowBalanceAlert strcut
+// LowBalanceAlert struct
 type LowBalanceAlert struct {
 	NotificationBalance int
 	CurrentBalance      int

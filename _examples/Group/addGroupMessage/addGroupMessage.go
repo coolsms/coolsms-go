@@ -45,7 +45,7 @@ func main() {
 	// message["kakaoOptions"] = kakaoOptions
 
 	// 메시지 데이터를 목록화 하여 파라미터로 넘겨줍니다.
-	messageList := []interface{}{}
+	var messageList []interface{}
 	messageList = append(messageList, message)
 
 	fmt.Println(messageList)
@@ -57,6 +57,7 @@ func main() {
 	result, err := client.Messages.AddGroupMessage(groupId, params)
 	if err != nil {
 		fmt.Println(err)
+		return
 	}
 
 	// Print Result
