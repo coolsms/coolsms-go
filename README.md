@@ -40,7 +40,7 @@ func main() {
 ## Installation
 
 ```
-go get github.com/solapi/solapi-go
+go get github.com/coolsms/coolsms-go
 ```
 
 ## Configs
