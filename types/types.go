@@ -60,12 +60,12 @@ type Point struct {
 
 // Profit struct for App struct
 type Profit struct {
-	SMS map[string]int
-	LMS map[string]int
-	MMS map[string]int
-	ATA map[string]int
-	CTA map[string]int
-	CTI map[string]int
+	SMS int
+	LMS int
+	MMS int
+	ATA int
+	CTA int
+	CTI int
 }
 
 // App struct for Group struct

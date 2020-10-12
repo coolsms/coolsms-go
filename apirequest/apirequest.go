@@ -12,6 +12,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"runtime"
 	"time"
@@ -51,23 +52,59 @@ func RandomString(n int) string {
 	return hex.EncodeToString(b)
 }
 
-// NewAPIRequest create
-func NewAPIRequest() *APIRequest {
-	os := runtime.GOOS
-	goVersion := runtime.Version()
-	osPlatform := fmt.Sprintf("%s/%s", os, goVersion)
+// Exists file check
+func exists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return false, err
+}
 
-	request := APIRequest{response: "", statusCode: "", OsPlatform: osPlatform, SdkVersion: sdkVersion}
+// Get config file path
+func getConfigFilePath() string {
+	pathList := [3]string{"config.json", "../config.json", "../../config.json"}
 
 	_, b, _, _ := runtime.Caller(0)
 	filePath := filepath.Dir(b)
-	file, err := ioutil.ReadFile(filepath.Join(filePath, "../config.json"))
+	filePath = filepath.Join(filePath, "../config.json")
+
+	path, err := os.Getwd()
+	if err == nil {
+		for _, configPath := range pathList {
+			processFilePath := filepath.Join(path, configPath)
+			exist, _ := exists(processFilePath)
+			if exist == true {
+				filePath = processFilePath
+				break
+			}
+		}
+	}
+
+	return filePath
+}
+
+// NewAPIRequest create
+func NewAPIRequest() *APIRequest {
+	goos := runtime.GOOS
+	goVersion := runtime.Version()
+	osPlatform := fmt.Sprintf("%s/%s", goos, goVersion)
+
+	request := APIRequest{response: "", statusCode: "", OsPlatform: osPlatform, SdkVersion: sdkVersion}
+
+	// Read File
+	filePath := getConfigFilePath()
+	file, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		log.Fatalln("Error reading")
 		return &request
 	}
 
 	err = json.Unmarshal(file, &request)
+	fmt.Println(request)
 	if err != nil {
 		log.Fatalln("Error file Unmarshal")
 		return &request
