@@ -9,6 +9,13 @@ import (
 func main() {
 	client := coolsms.NewClient()
 
+	// SetCustomConfig
+	/*
+		client.Storage.Config = map[string]string{
+			"APIKey": "Another API KEY",
+		}
+	*/
+
 	// 검색조건값
 	params := make(map[string]string)
 	params["limit"] = "1"

@@ -17,7 +17,9 @@ var (
 )
 
 // Storage struct
-type Storage struct{}
+type Storage struct {
+	Config map[string]string
+}
 
 // UploadFile upload a file
 func (r *Storage) UploadFile(params map[string]string) (types.File, error) {
@@ -48,6 +50,10 @@ func (r *Storage) UploadFile(params map[string]string) (types.File, error) {
 	params["file"] = encoded
 
 	request := apirequest.NewAPIRequest()
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	err = request.POST("storage/v1/files", params, &result)
 	if err != nil {
 		return result, err
@@ -60,6 +66,10 @@ func (r *Storage) UploadFile(params map[string]string) (types.File, error) {
 func (r *Storage) GetFileList(params map[string]string) (types.FileList, error) {
 	request := apirequest.NewAPIRequest()
 	result := types.FileList{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	err := request.GET("storage/v1/files", params, &result)
 	if err != nil {
 		return result, err

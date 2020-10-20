@@ -42,6 +42,9 @@ type APIRequest struct {
 	AppId      string `json:"AppId"`
 	SdkVersion string `json:"sdkVersion"`
 	OsPlatform string `json:"osPlatform"`
+
+	// Custom Config
+	Config map[string]string
 }
 
 // RandomString returns a random string
@@ -109,7 +112,34 @@ func NewAPIRequest() *APIRequest {
 		log.Fatalln("Error file Unmarshal")
 		return &request
 	}
+
 	return &request
+}
+
+// SetCustomConfig set custom config for request
+func (a *APIRequest) SetCustomConfig(config map[string]string) error {
+	for key, value := range config {
+		switch key {
+		case "APIKey":
+			a.APIKey = value
+			break
+		case "APISecret":
+			a.APISecret = value
+			break
+		case "Protocol":
+			a.Protocol = value
+			break
+		case "Domain":
+			a.Domain = value
+			break
+		case "Prefix":
+			a.Prefix = value
+			break
+		case "AppId":
+			a.AppId = value
+		}
+	}
+	return nil
 }
 
 // GetAuthorization gets the authorization

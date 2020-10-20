@@ -8,12 +8,18 @@ import (
 )
 
 // Messages struct
-type Messages struct{}
+type Messages struct {
+	Config map[string]string
+}
 
 // GetMessageList gets the list of messages
 func (r *Messages) GetMessageList(params map[string]string) (types.MessageList, error) {
 	request := apirequest.NewAPIRequest()
 	result := types.MessageList{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	err := request.GET("messages/v4/list", params, &result)
 	if err != nil {
 		return result, err
@@ -36,6 +42,10 @@ func (r *Messages) SendSimpleMessage(params map[string]interface{}) (types.Simpl
 	params["agent"] = agent
 
 	result := types.SimpleMessage{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	err := request.POST("messages/v4/send", params, &result)
 	if err != nil {
 		return result, err
@@ -53,6 +63,10 @@ func (r *Messages) CreateGroup(params map[string]string) (types.Group, error) {
 		params["appId"] = request.AppId
 	}
 	result := types.Group{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	err := request.POST("messages/v4/groups", params, &result)
 	if err != nil {
 		return result, err
@@ -65,6 +79,10 @@ func (r *Messages) CreateGroup(params map[string]string) (types.Group, error) {
 func (r *Messages) AddGroupMessage(groupId string, params interface{}) (types.AddGroupMessageList, error) {
 	request := apirequest.NewAPIRequest()
 	result := types.AddGroupMessageList{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	url := fmt.Sprintf("messages/v4/groups/%s/messages", groupId)
 	err := request.PUT(url, params, &result)
 	if err != nil {
@@ -78,6 +96,10 @@ func (r *Messages) AddGroupMessage(groupId string, params interface{}) (types.Ad
 func (r *Messages) SendGroup(groupId string) (types.Group, error) {
 	request := apirequest.NewAPIRequest()
 	result := types.Group{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	url := fmt.Sprintf("messages/v4/groups/%s/send", groupId)
 	params := make(map[string]string)
 	err := request.POST(url, params, &result)
@@ -92,6 +114,10 @@ func (r *Messages) SendGroup(groupId string) (types.Group, error) {
 func (r *Messages) DeleteGroup(groupId string) (types.Group, error) {
 	request := apirequest.NewAPIRequest()
 	result := types.Group{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	url := fmt.Sprintf("messages/v4/groups/%s", groupId)
 	params := make(map[string]string)
 	err := request.DELETE(url, params, &result)
@@ -106,6 +132,10 @@ func (r *Messages) DeleteGroup(groupId string) (types.Group, error) {
 func (r *Messages) GetGroupList(params map[string]string) (types.GroupList, error) {
 	request := apirequest.NewAPIRequest()
 	result := types.GroupList{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	err := request.GET("messages/v4/groups", params, &result)
 	if err != nil {
 		return result, err
@@ -118,6 +148,10 @@ func (r *Messages) GetGroupList(params map[string]string) (types.GroupList, erro
 func (r *Messages) GetGroup(groupId string) (types.Group, error) {
 	request := apirequest.NewAPIRequest()
 	result := types.Group{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	params := map[string]string{}
 	url := fmt.Sprintf("messages/v4/groups/%s", groupId)
 	err := request.GET(url, params, &result)
@@ -132,6 +166,10 @@ func (r *Messages) GetGroup(groupId string) (types.Group, error) {
 func (r *Messages) GetGroupMessageList(groupId string, params map[string]string) (types.MessageList, error) {
 	request := apirequest.NewAPIRequest()
 	result := types.MessageList{}
+	setCustomConfigErr := request.SetCustomConfig(r.Config)
+	if setCustomConfigErr != nil {
+		return result, setCustomConfigErr
+	}
 	url := fmt.Sprintf("messages/v4/groups/%s/messages", groupId)
 	err := request.GET(url, params, &result)
 	if err != nil {

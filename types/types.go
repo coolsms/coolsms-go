@@ -194,8 +194,8 @@ type AddGroupMessageList struct {
 
 // LowBalanceAlert struct
 type LowBalanceAlert struct {
-	NotificationBalance int
-	CurrentBalance      int
+	NotificationBalance string
+	CurrentBalance      string
 	Balances            []int
 	Channels            []string
 	Enabled             bool
