@@ -94,7 +94,7 @@ type Group struct {
 	App            App
 	SdkVersion     string
 	OsPlatform     string
-	Log            []map[string]string
+	Log            []map[string]interface{}
 	Status         string
 	DateSent       string
 	DateCompleted  string
@@ -149,7 +149,7 @@ type Message struct {
 	DateReceived   string
 	StatusCode     string
 	NetworkCode    string
-	Log            []map[string]string
+	Log            []map[string]interface{}
 	Replacement    bool
 	AutoTypeDetect bool
 	RoutedQueue    string
