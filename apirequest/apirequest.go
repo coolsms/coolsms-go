@@ -69,7 +69,13 @@ func exists(path string) (bool, error) {
 
 // Get config file path
 func getConfigFilePath() string {
-	pathList := [3]string{"config.json", "../config.json", "../../config.json"}
+	pathList := [5]string{
+		"config.json",
+		"../config.json",
+		"../../config.json",
+		"../../../config.json",
+		"../../../../config.json",
+	}
 
 	_, b, _, _ := runtime.Caller(0)
 	filePath := filepath.Dir(b)
