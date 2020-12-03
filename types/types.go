@@ -44,10 +44,10 @@ type CountForCharge struct {
 
 // Balance struct for Group struct
 type BalanceForGroup struct {
-	Requested   int
-	Replacement int
-	Refund      int
-	Sum         int
+	Requested   float32
+	Replacement float32
+	Refund      float32
+	Sum         float32
 }
 
 // Point struct for Group struct
@@ -60,12 +60,12 @@ type Point struct {
 
 // Profit struct for App struct
 type Profit struct {
-	SMS int
-	LMS int
-	MMS int
-	ATA int
-	CTA int
-	CTI int
+	SMS float32
+	LMS float32
+	MMS float32
+	ATA float32
+	CTA float32
+	CTI float32
 }
 
 // App struct for Group struct
@@ -77,12 +77,12 @@ type App struct {
 
 // Price struct
 type Price struct {
-	SMS int
-	LMS int
-	MMS int
-	ATA int
-	CTA int
-	CTI int
+	SMS float32
+	LMS float32
+	MMS float32
+	ATA float32
+	CTA float32
+	CTI float32
 }
 
 // Group struct
