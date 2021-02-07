@@ -164,6 +164,7 @@ type Message struct {
 	DateUpdated    string
 	Reason         string
 	NetworkName    string
+  Status         string
 }
 
 // MessageList struct
