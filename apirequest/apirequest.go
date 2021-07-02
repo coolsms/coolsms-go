@@ -181,7 +181,7 @@ func (a *APIRequest) GET(resource string, params map[string]string, customStruct
 	// Request
 	resp, err := client.Do(req)
 	if err != nil {
-    fmt.Println(err)
+		fmt.Println(err)
 		return errFailedToClientRequest
 	}
 
@@ -209,7 +209,7 @@ func (a *APIRequest) Request(method string, resource string, params interface{},
 	// Convert to json string
 	jsonString, err := json.Marshal(params)
 	if err != nil {
-    fmt.Println(err)
+		fmt.Println(err)
 		return errFailedToConvertJSON
 	}
 
@@ -226,7 +226,7 @@ func (a *APIRequest) Request(method string, resource string, params interface{},
 	// Request
 	resp, err := client.Do(req)
 	if err != nil {
-    fmt.Println(err)
+		fmt.Println(err)
 		return errFailedToClientRequest
 	}
 
