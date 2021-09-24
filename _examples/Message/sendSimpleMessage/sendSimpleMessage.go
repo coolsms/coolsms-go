@@ -44,6 +44,12 @@ func main() {
 	params := make(map[string]interface{})
 	params["message"] = message
 
+  // 컨피그 임의로 설정
+  // client.Messages.Config = map[string]string{
+  //   "APIKey": "NCSPX2S1CWNQ3D1R",
+  //   "APISecret": "IXHBDCUIKZKUEDPL3KQFQNOIJ15ZHKVL",
+  // }
+
 	// API 호출 후 결과값을 받아 옵니다.
 	result, err := client.Messages.SendSimpleMessage(params)
 	if err != nil {
