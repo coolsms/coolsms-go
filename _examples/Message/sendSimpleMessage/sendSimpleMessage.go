@@ -48,6 +48,8 @@ func main() {
   // client.Messages.Config = map[string]string{
   //   "APIKey": "NCSPX2S1CWNQ3D1R",
   //   "APISecret": "IXHBDCUIKZKUEDPL3KQFQNOIJ15ZHKVL",
+  //   "Protocol": "https",
+  //   "Domain": "api.coolsms.co.kr",
   // }
 
   // API 호출 후 결과값을 받아 옵니다.

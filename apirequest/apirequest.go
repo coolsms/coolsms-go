@@ -108,14 +108,14 @@ func NewAPIRequest() *APIRequest {
 	filePath := getConfigFilePath()
 	file, err := ioutil.ReadFile(filePath)
 	if err != nil {
-		log.Fatalln("Error reading")
+		log.Println("[WARNING] cannot find config.json")
 		return &request
 	}
 
 	err = json.Unmarshal(file, &request)
 	fmt.Println(request)
 	if err != nil {
-		log.Fatalln("Error file Unmarshal")
+		log.Fatalln("[ERROR] cannot parse config.json")
 		return &request
 	}
 
